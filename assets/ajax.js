@@ -192,3 +192,8 @@ mw.log.deprecate( window, 'sajax_do_call', doAjaxRequest, deprecationNotice );
 mw.log.deprecate( window, 'wfSupportsAjax', wfSupportsAjax, deprecationNotice );
 
 }( mediaWiki ) );
+
+
+
+
+console.log('le dossier ajax est boooo');
