@@ -1,87 +1,85 @@
 const table1        = document.getElementById('table1');
+const reg           = new RegExp( /(\(.\))/g );
+let dataObj         = {};
+const tableOneDatas = [];
 
 
+/* Je récupère chaque row du tableau 1 que je place dans un array inside un array*/
+// help source: https://stackoverflow.com/a/68047870
+
+const tableOneDatasBrut = [...table1.rows].map(row => [...row.cells].map(td => td.innerText));
+tableOneDatasBrut.splice(0,2); /* supprime les 2 prmières row*/
 
 
-//"data" :[ {id:"1", country:"pays", year1:data, year1:data, year1:data}, {conutry:"pays", year1:data, year1:data, year1:data} ];
-
-
-// // source: https://stackoverflow.com/a/68047870
-
-/* Je récupère chaque row du tableau numéro 1 que je place dans un array inside un array*/
-const dataTable1 = [...table1.rows].map(row => [...row.cells].map(td => td.innerText));
-dataTable1.splice(0,2); /* supprime les 2ere row*/
-
-/* surprime les caractères spéciaux (²) */
-let reg = new RegExp( /(\(.\))/g );
-dataTable1.forEach(element => {
+/* surprime les caractères spéciaux: (²) */
+tableOneDatasBrut.forEach(element => {
      element[1] = element[1].replace(reg, '');
 })
 
 
-/* Je récupère la row du tableau avec les dates et remplace les deux 1er éléments */
-let dataKey = [...table1.rows[1].cells].map(td => td.innerText);
-dataKey.splice(0,2, 'id','country');
+/* Je récupère la row du tableau avec les dates et remplace les deux 1er éléments par id et country*/
+let dataKeyTable1 = [...table1.rows[1].cells].map(el => el.innerText);
+dataKeyTable1.splice(0,2, 'id','country');
+
+
+/* création d'un tableau contenant chaque pays et leurs données en tant qu'objet */
+tableOneDatasBrut.forEach(elem => {
+    result =  Object.assign.apply({}, dataKeyTable1.map( (key, value) => ( {[key]: elem[value]} ) ) );
+    tableOneDatas.push(result);
+});
+// help source: https://www.codegrepper.com/code-examples/javascript/javascript+combine+two+arrays+to+object
+
+
+// console.log(tableOneDatas);
+// tableOneDatas.map(elem => elem.country)
 
 
 
-console.log(dataTable1);
-
-
-/* assembler les deux pour créer un object */
-
+/*====================================================================================== */
+/*=============================| Chart table 1 |================================ */
 
 
 
+/*==========| setup var|========== */
+let ctx      = document.getElementById('myChart').getContext('2d');
+const labels = tableOneDatas.map(elem => elem.country);
+
+/*==========| setup colors|========== */
+    const clrOne   = '255, 99, 132';
+    const clrTwo   = '54, 162, 235';
+    const clrThree = '255, 206, 86';
+    const clrFour  = '75, 192, 192';
+    const clrFive  = '153, 102, 255';
+    const clrSix   = '255, 159, 64';
+
+    const clrBgOpacity     = 0.2;
+    const clrBorderOpacity = 1;
+
+    const colors = [clrOne, clrTwo, clrThree, clrFour, clrFive, clrSix];
+    const randomColor = () => colors[ Math.floor(Math.random() * colors.length)];
+
+console.log(labels)
 
 
+/*=============================| Le Chart table 1 |================================ */
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-let ctx = document.getElementById('myChart').getContext('2d');
 let myChart = new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-        }]
+        labels: labels,
+        datasets: datasetsTable1(),
     },
     options: {
+        responsive: true,
+        plugins: {
+            legend: {
+              position: 'top',
+            },
+            title: {
+              display: true,
+              text: 'Crimes recorded by the police'
+            }
+        },
         scales: {
             y: {
                 beginAtZero: true
@@ -89,3 +87,20 @@ let myChart = new Chart(ctx, {
         }
     }
 });
+
+/*=============================| Function pour intégrer les datas |================================ */
+
+function datasetsTable1 () {
+    let datasets = [];
+    for(i=2; i < dataKeyTable1.length; i++) {
+        obj = { 
+                label: dataKeyTable1[i],
+                data: tableOneDatas.map(elem => parseInt(elem[dataKeyTable1[i]])),
+                backgroundColor: `rgba(${randomColor()}, ${clrBgOpacity})`,
+                borderColor:     `rgba(${randomColor()}, ${clrBorderOpacity})`,
+                borderWidth: 1,
+        }
+        datasets.push(obj);
+    } 
+    return datasets;
+}
