@@ -1,3 +1,4 @@
+
 let randomColor = () => {
     return Math.floor(Math.random() * 255);
 }
@@ -27,6 +28,9 @@ console.log(oldTab);
 
 table.insertAdjacentHTML('beforebegin', '<canvas id="cvs2" width="400" height="200">Canvas not supported on your browser...</canvas>');
 
+let h1 = document.getElementById("firstHeading");
+h1.insertAdjacentHTML('afterend', '<canvas id="cvsA" width="400" height="200">Canvas not supported on tour browser...</canvas>');
+
 let ctx = document.getElementById('cvs2');
 let myChart = new Chart(ctx, {
     type: 'bar',
@@ -35,11 +39,7 @@ let myChart = new Chart(ctx, {
         datasets: [{
             label: [],
             data: [],
-            backgroundColor: [],
-            borderWidth: 1,
-            borderColor: [
-                `rgb(${randomColor()}, ${randomColor()}, ${randomColor()})`
-            ]
+            backgroundColor: []
         }]
     },
     options: {
@@ -64,9 +64,48 @@ for (let i = 0; i < countryTab.length; i++) {
     
     myChart.data.datasets.push({label: element, data: [youngTab[i], oldTab[i]], backgroundColor: `rgba(${randomColor()}, ${randomColor()}, ${randomColor()}, 0.5)`, borderColor: `rgb(${randomColor()}, ${randomColor()}, ${randomColor()})`});
     myChart.update();
-    // myChart.data.datasets.push({backgroundColor: [`rgba(${randomColor}, ${randomColor}, ${randomColor}, 0.2)`]});
 }
-// for (let i = 0; i < youngTab.length; i++) {
-//     myChart.data.datasets.push({label: [], data: [youngTab[i], oldTab[i]]});
-// }
 
+
+let chartApi = async () => {
+    let generateLabels = () => {
+        let labels = [];
+
+        for (let i = 0; i < data.length; i++) {
+            labels.push(i.toString());
+        }
+            return labels;
+    }
+    let reloadData = async () => {
+        response = await fetch('https://canvasjs.com/services/data/datapoints.php', {cache: "reload"});
+        return await response.json();
+    }
+    let response = await fetch('https://canvasjs.com/services/data/datapoints.php', {cache: "reload"});
+    let data = await response.json();
+    console.log(data);
+    let ctx = document.getElementById("cvsA");
+    let animChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: generateLabels(),
+            datasets: [{
+                label: [],
+                data: data,
+                fill: true,
+                borderColor: `rgb(${randomColor()}, ${randomColor()}, ${randomColor()})`
+            }]
+        }
+    })
+    let i = 0;
+    setTimeout(async () => {
+        animChart.data.labels.push(i + 10);
+        data = await reloadData();
+        animChart.data.datasets.push({data: data[0]});
+        animChart.update();
+        i++;
+    }, 1000);
+    // animChart.data.labels = generateLabels();
+    // animChart.data.datasets.push({label: "data", data: data, borderColor: `rgb(${randomColor()}, ${randomColor()}, ${randomColor()})`});
+    // animChart.update();
+}
+chartApi();
