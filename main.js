@@ -1,8 +1,17 @@
+/*==========| setup var|========== */
 const table1        = document.getElementById('table1');
 const reg           = new RegExp( /(\(.\))/g );
 let dataObj         = {};
 const tableOneDatas = [];
 
+const canvas = document.createElement('canvas');
+canvas.id = 'chartTableOne';
+const divVoisin = document.getElementById('toc');
+divVoisin.parentNode.insertBefore(canvas, divVoisin.nextSibling);
+
+
+/*====================================================================================== */
+/*=============================| récupération des donnés |================================ */
 
 /* Je récupère chaque row du tableau 1 que je place dans un array inside un array*/
 // help source: https://stackoverflow.com/a/68047870
@@ -30,18 +39,12 @@ tableOneDatasBrut.forEach(elem => {
 // help source: https://www.codegrepper.com/code-examples/javascript/javascript+combine+two+arrays+to+object
 
 
-// console.log(tableOneDatas);
-// tableOneDatas.map(elem => elem.country)
-
-
 
 /*====================================================================================== */
 /*=============================| Chart table 1 |================================ */
 
-
-
-/*==========| setup var|========== */
-let ctx      = document.getElementById('myChart').getContext('2d');
+/*==========| setup var chart|========== */
+let ctx      = document.getElementById('chartTableOne').getContext('2d');
 const labels = tableOneDatas.map(elem => elem.country);
 
 /*==========| setup colors|========== */
@@ -58,12 +61,9 @@ const labels = tableOneDatas.map(elem => elem.country);
     const colors = [clrOne, clrTwo, clrThree, clrFour, clrFive, clrSix];
     const randomColor = () => colors[ Math.floor(Math.random() * colors.length)];
 
-console.log(labels)
-
-
 /*=============================| Le Chart table 1 |================================ */
 
-let myChart = new Chart(ctx, {
+let chartTableOne = new Chart(ctx, {
     type: 'bar',
     data: {
         labels: labels,
@@ -83,6 +83,13 @@ let myChart = new Chart(ctx, {
         scales: {
             y: {
                 beginAtZero: true
+            },
+            x: {
+                ticks: {
+                    autoSkip: false,
+                    maxRotation: 90,
+                    minRotation: 90
+                }
             }
         }
     }
