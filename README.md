@@ -2,6 +2,7 @@
 <p align="center">
 <img src="https://github.com/Deepyflo/js-datavisualisation-challenge/blob/main/assets/img/data.PNG" width="90%"></img>
 </p>
+
 ## About
 The purpose of this challenge is to evaluate our abilities to solve a problem inspired by a real situation using our knowledge of Javascript acquired so far.
 
