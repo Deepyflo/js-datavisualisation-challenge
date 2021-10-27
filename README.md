@@ -21,7 +21,7 @@ we chose to use chart.js for the formatting of our data, for its simplicity and 
 
 
 ## Objectives
-*[Challenge instructions](https://github.com/becodeorg/CRL-Woods-5.33/blob/main/1.TRAIL/02.The-Hill/08.Javascript/Challenge/javascript-data-visualisation/readme.md)*
+[Challenge instructions](https://github.com/becodeorg/CRL-Woods-5.33/blob/main/1.TRAIL/02.The-Hill/08.Javascript/Challenge/javascript-data-visualisation/readme.md)
 
    **DOM**  manipulation
 -   **AJAX**/**FETCH**  request
@@ -32,4 +32,4 @@ we chose to use chart.js for the formatting of our data, for its simplicity and 
 
   
 
-### _[Final Result](https://deepyflo.github.io/js-datavisualisation-challenge/)_ 
+### [Final Result](https://deepyflo.github.io/js-datavisualisation-challenge/)
