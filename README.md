@@ -32,4 +32,4 @@ we chose to use chart.js for the formatting of our data, for its simplicity and 
 
   
 
-### _[Final Result](lien)_ 
+### _[Final Result](https://deepyflo.github.io/js-datavisualisation-challenge/)_ 
