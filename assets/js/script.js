@@ -82,7 +82,6 @@ let chartApi = async () => {
     }
     let response = await fetch('https://canvasjs.com/services/data/datapoints.php', {cache: "reload"});
     let data = await response.json();
-    console.log(data);
     let ctx = document.getElementById("cvsA");
     let animChart = new Chart(ctx, {
         type: 'line',
@@ -92,15 +91,18 @@ let chartApi = async () => {
                 label: [],
                 data: data,
                 fill: true,
-                borderColor: `rgb(${randomColor()}, ${randomColor()}, ${randomColor()})`
+                borderColor: `rgb(${randomColor()}, ${randomColor()}, ${randomColor()})`,
+                tension: 0.5
             }]
         }
     })
-    let i = 0;
-    setTimeout(async () => {
-        animChart.data.labels.push(i + 10);
+    let i = 10;
+    setInterval(async () => {
+        animChart.data.labels.push(i);
         data = await reloadData();
-        animChart.data.datasets.push({data: data[0]});
+        animChart.data.datasets[0].data.push(data[3]);
+        // animChart.data.datasets[0].backgroundColor = `rgba(${randomColor()}, ${randomColor()}, ${randomColor()}, 0.5)`;
+        // animChart.data.datasets[0].borderColor = `rgba(${randomColor()}, ${randomColor()}, ${randomColor()}, 0.5)`;
         animChart.update();
         i++;
     }, 1000);
