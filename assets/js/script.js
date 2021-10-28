@@ -82,8 +82,8 @@ let chartApi = async () => {
     }
     let response = await fetch('https://canvasjs.com/services/data/datapoints.php', {cache: "reload"});
     let data = await response.json();
-    let ctx = document.getElementById("cvsA");
-    let animChart = new Chart(ctx, {
+    let ctxB = document.getElementById("cvsA");
+    let animChart = new Chart(ctxB, {
         type: 'line',
         data: {
             labels: generateLabels(),
