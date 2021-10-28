@@ -44,7 +44,7 @@ tableOneDatasBrut.forEach(elem => {
 /*=============================| Chart table 1 |================================ */
 
 /*==========| setup var chart|========== */
-let ctx      = document.getElementById('chartTableOne').getContext('2d');
+let context      = document.getElementById('chartTableOne').getContext('2d');
 const labels = tableOneDatas.map(elem => elem.country);
 
 /*==========| setup colors|========== */
@@ -63,7 +63,7 @@ const labels = tableOneDatas.map(elem => elem.country);
 
 /*=============================| Le Chart table 1 |================================ */
 
-let chartTableOne = new Chart(ctx, {
+let chartTableOne = new Chart(context, {
     type: 'bar',
     data: {
         labels: labels,
