@@ -30,8 +30,8 @@ table.insertAdjacentHTML('beforebegin', '<canvas id="cvs2" width="400" height="2
 let h1 = document.getElementById("firstHeading");
 h1.insertAdjacentHTML('afterend', '<canvas id="cvsA" width="400" height="200">Canvas not supported on tour browser...</canvas>');
 
-let ctx = document.getElementById('cvs2');
-let myChart = new Chart(ctx, {
+let ctxB = document.getElementById('cvs2');
+let myChart = new Chart(ctxB, {
     type: 'bar',
     data: {
         labels: ['2007-09', '2010-12'],
@@ -111,7 +111,7 @@ let chartApi = async () => {
 }
 chartApi();
 
-//Syl work
+
 
 /*==========| setup var|========== */
 const table1        = document.getElementById('table1');
@@ -159,7 +159,7 @@ tableOneDatasBrut.forEach(elem => {
 /*=============================| Chart table 1 |================================ */
 
 /*==========| setup var chart|========== */
-let context      = document.getElementById('chartTableOne').getContext('2d');
+let ctxA      = document.getElementById('chartTableOne').getContext('2d');
 const labels = tableOneDatas.map(elem => elem.country);
 
 /*==========| setup colors|========== */
@@ -174,11 +174,11 @@ const labels = tableOneDatas.map(elem => elem.country);
     const clrBorderOpacity = 1;
 
     const colors = [clrOne, clrTwo, clrThree, clrFour, clrFive, clrSix];
-    const randomColor = () => colors[ Math.floor(Math.random() * colors.length)];
+    const randomClr = () => colors[ Math.floor(Math.random() * colors.length)];
 
 /*=============================| Le Chart table 1 |================================ */
 
-let chartTableOne = new Chart(context, {
+let chartTableOne = new Chart(ctxA, {
     type: 'bar',
     data: {
         labels: labels,
@@ -218,8 +218,8 @@ function datasetsTable1 () {
         obj = { 
                 label: dataKeyTable1[i],
                 data: tableOneDatas.map(elem => parseInt(elem[dataKeyTable1[i]])),
-                backgroundColor: `rgba(${randomColor()}, ${clrBgOpacity})`,
-                borderColor:     `rgba(${randomColor()}, ${clrBorderOpacity})`,
+                backgroundColor: `rgba(${randomClr()}, ${clrBgOpacity})`,
+                borderColor:     `rgba(${randomClr()}, ${clrBorderOpacity})`,
                 borderWidth: 1,
         }
         datasets.push(obj);
