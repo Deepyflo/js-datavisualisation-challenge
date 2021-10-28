@@ -111,3 +111,8 @@ function datasetsTable1 () {
     } 
     return datasets;
 }
+
+
+let randomColor = () => {
+    return Math.floor(Math.random() * 255);
+}
