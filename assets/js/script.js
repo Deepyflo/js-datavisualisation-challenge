@@ -1,8 +1,3 @@
-
-let randomColor = () => {
-    return Math.floor(Math.random() * 255);
-}
-
 let table = document.getElementById("table2");
 let allrows = table.rows.length;
 console.log(table);
